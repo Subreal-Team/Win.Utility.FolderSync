@@ -10,6 +10,7 @@ namespace FolderSync
 	{
 		static void Main(string[] args)
 		{
+            var config = new UtilityConfiguration();
 		}
 	}
 }
