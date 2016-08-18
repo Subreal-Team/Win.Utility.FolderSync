@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FolderSync
 {
@@ -10,7 +6,21 @@ namespace FolderSync
 	{
 		static void Main(string[] args)
 		{
-            var config = new UtilityConfiguration();
+            var config = new SyncConfiguration();
+
+			if (config.NoParameters)
+			{
+				PrintHelp();
+				return;
+			}
+
+			var synchronizer = new Synchronizer();
+			synchronizer.Run(config);
+		}
+
+		private static void PrintHelp()
+		{
+			Console.WriteLine("FolderSync - синхронизация каталогов. По маске, с проверкой даты создания, версии файла.");
 		}
 	}
 }

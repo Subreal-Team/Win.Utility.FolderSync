@@ -2,8 +2,9 @@ using System;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using FolderSync.Common.Logger;
 
-namespace FolderSync
+namespace FolderSync.Common
 {
 	public abstract class ConfigurationBase
 	{
@@ -16,7 +17,7 @@ namespace FolderSync
 			var publicProps = typeInfo.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
 			// взять свойства с атрибутом CommandLineArgument
-			var attributedProps = publicProps.Select(x => new { property = x, customAttributes = CustomAttributeExtensions.GetCustomAttributes((MemberInfo) x) })
+			var attributedProps = publicProps.Select(x => new { property = x, customAttributes = x.GetCustomAttributes() })
 				.Where(x => x.customAttributes.Any(y => y.GetType() == typeof(CommandLineArgumentAttribute)))
 				.ToList();
 
@@ -26,10 +27,19 @@ namespace FolderSync
 				{
 					var cmdAttr = (CommandLineArgumentAttribute) attr;
 					var cmdValue = _arguments.FirstOrDefault(x => x.ToUpper().Contains(cmdAttr.Name.ToUpper()));
-					if (String.IsNullOrWhiteSpace(cmdValue)) continue;
+					if (String.IsNullOrWhiteSpace(cmdValue))
+					{
+						prop.property.SetValue(this, cmdAttr.DefaultValue);
+						continue;
+					}
 
 					var match = Regex.Match(cmdAttr.ParseTemplate, "{name}(.*){value}");
-					if (!match.Success || match.Groups.Count <= 0) continue;
+					// неверно задан параметр
+					if (!match.Success || match.Groups.Count <= 0)
+					{
+						new ConsoleLogger().Error("Неверно задан параметр {0}", cmdAttr);
+						continue;
+					}
 
 					var splitter = match.Groups[1].Value;
 					var value = Regex.Split(cmdValue, splitter);
@@ -41,5 +51,7 @@ namespace FolderSync
 				}
 			}
 		}
+
+		public bool NoParameters { get { return _arguments.Length == 1; } }
 	}
 }

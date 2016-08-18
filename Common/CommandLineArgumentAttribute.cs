@@ -14,7 +14,7 @@ namespace FolderSync
         {
             Name = name;
             ParseTemplate = parseTemplate;
-            DefaultValue = DefaultValue;
+            DefaultValue = defaultValue;
         }
 
         /// <summary>
