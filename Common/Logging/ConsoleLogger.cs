@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FolderSync.Common.Logger
+namespace FolderSync.Common.Logging
 {
 	public class ConsoleLogger : ILogger
 	{

@@ -3,14 +3,12 @@ using System.Diagnostics;
 using System.IO;
 using FolderSync.Common;
 using FolderSync.Common.Extensions;
-using FolderSync.Common.Logger;
+using FolderSync.Common.Logging;
 
 namespace FolderSync
 {
 	public class Synchronizer
 	{
-		private readonly ILogger _logger = new ConsoleLogger();
-
 		public void Run(SyncConfiguration config)
 		{
 			Guard.IsNotEmpty(config.TargetFolder);
@@ -27,12 +25,12 @@ namespace FolderSync
 			var targetFiles = Directory.GetFiles(targetFolder, config.FileMask, SearchOption.AllDirectories);
 			var sourceFiles = Directory.GetFiles(sourceFolder, config.FileMask, SearchOption.AllDirectories);
 
-			_logger.Debug("Каталог назначения '{0}': {1} файлов.", targetFolder, targetFiles.Length);
-			_logger.Debug("Каталог источник '{0}': {1} файлов.", sourceFolder, sourceFiles.Length);
+			Logger.Instance.Debug("Каталог назначения '{0}': {1} файлов.", targetFolder, targetFiles.Length);
+			Logger.Instance.Debug("Каталог источник '{0}': {1} файлов.", sourceFolder, sourceFiles.Length);
 
 			if (sourceFiles.Length > 0)
 			{
-				_logger.Debug("Синхронизация ...");
+				Logger.Instance.Debug("Синхронизация ...");
 				foreach (string sourceFile in sourceFiles)
 				{
 					Console.Write(sourceFile);

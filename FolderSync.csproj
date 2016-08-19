@@ -42,12 +42,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\CommandLineArgumentAttribute.cs" />
-    <Compile Include="Common\ConfigurationBase.cs" />
+    <Compile Include="Common\ConsoleConfigurationBase.cs" />
     <Compile Include="Common\Extensions\FileNameExtensions.cs" />
     <Compile Include="Common\Extensions\StringExtensions.cs" />
     <Compile Include="Common\Guard.cs" />
-    <Compile Include="Common\Logger\ConsoleLogger.cs" />
-    <Compile Include="Common\Logger\ILogger.cs" />
+    <Compile Include="Common\Logging\ConsoleLogger.cs" />
+    <Compile Include="Common\Logging\ILogger.cs" />
+    <Compile Include="Common\Logging\Logger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SyncConfiguration.cs" />

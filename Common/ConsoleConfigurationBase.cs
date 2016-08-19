@@ -1,17 +1,21 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using FolderSync.Common.Logger;
+using FolderSync.Common.Logging;
 
 namespace FolderSync.Common
 {
-	public abstract class ConfigurationBase
+	public abstract class ConsoleConfigurationBase
 	{
 		protected string[] _arguments = Environment.GetCommandLineArgs();
 
-		protected ConfigurationBase()
+		protected ConsoleConfigurationBase()
 		{
+			NotValidParameters = false;
+			NotValidParamtersMessages = new List<string>();
+
 			// по всем публичным свойствам класса
 			var typeInfo = this.GetType();
 			var publicProps = typeInfo.GetProperties(BindingFlags.Public | BindingFlags.Instance);
@@ -27,6 +31,7 @@ namespace FolderSync.Common
 				{
 					var cmdAttr = (CommandLineArgumentAttribute) attr;
 					var cmdValue = _arguments.FirstOrDefault(x => x.ToUpper().Contains(cmdAttr.Name.ToUpper()));
+					// аргумент не указан, вз€ть значение по умолчанию
 					if (String.IsNullOrWhiteSpace(cmdValue))
 					{
 						prop.property.SetValue(this, cmdAttr.DefaultValue);
@@ -37,7 +42,10 @@ namespace FolderSync.Common
 					// неверно задан параметр
 					if (!match.Success || match.Groups.Count <= 0)
 					{
-						new ConsoleLogger().Error("Ќеверно задан параметр {0}", cmdAttr);
+						NotValidParameters = true;
+						var errorMessage = String.Format("Ќеверно задан параметр {0}, формат: {1}", cmdAttr.Name, cmdAttr.ParseTemplate);
+						NotValidParamtersMessages.Add(errorMessage);
+						Logger.Instance.Error(errorMessage);
 						continue;
 					}
 
@@ -52,6 +60,19 @@ namespace FolderSync.Common
 			}
 		}
 
+		/// <summary>
+		/// ‘лаг - параметры не указаны
+		/// </summary>
 		public bool NoParameters { get { return _arguments.Length == 1; } }
+
+		/// <summary>
+		/// ‘лаг ошибки считвани€ параметров
+		/// </summary>
+		public bool NotValidParameters { get; private set; }
+
+		/// <summary>
+		/// —ообщени€ об ошибке считывани€ параметров
+		/// </summary>
+		public List<string> NotValidParamtersMessages { get; private set; }
 	}
 }

@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace FolderSync.Common.Logger
+namespace FolderSync.Common.Logging
 {
 	/// <summary> Интерфейс для реализации логирования </summary>
 	public interface ILogger

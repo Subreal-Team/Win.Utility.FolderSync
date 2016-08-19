@@ -2,7 +2,7 @@
 
 namespace FolderSync
 {
-	public class SyncConfiguration : ConfigurationBase
+	public class SyncConfiguration : ConsoleConfigurationBase
     {
 		/// <summary>
 		/// Каталог назначения
