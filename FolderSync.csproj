@@ -41,14 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\CommandLineArgumentAttribute.cs" />
-    <Compile Include="Common\ConsoleConfigurationBase.cs" />
-    <Compile Include="Common\Extensions\FileNameExtensions.cs" />
-    <Compile Include="Common\Extensions\StringExtensions.cs" />
-    <Compile Include="Common\Guard.cs" />
-    <Compile Include="Common\Logging\ConsoleLogger.cs" />
-    <Compile Include="Common\Logging\ILogger.cs" />
-    <Compile Include="Common\Logging\Logger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SyncConfiguration.cs" />
@@ -65,4 +57,15 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3')">
+      <ItemGroup>
+        <Reference Include="SubrealTeam.Windows.Common">
+          <HintPath>packages\SubrealTeam.Windows.Common\lib\net45\SubrealTeam.Windows.Common.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
 </Project>

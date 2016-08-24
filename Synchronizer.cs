@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using FolderSync.Common;
-using FolderSync.Common.Extensions;
-using FolderSync.Common.Logging;
+using SubrealTeam.Windows.Common;
+using SubrealTeam.Windows.Common.Extensions;
+using SubrealTeam.Windows.Common.Logging;
 
 namespace FolderSync
 {

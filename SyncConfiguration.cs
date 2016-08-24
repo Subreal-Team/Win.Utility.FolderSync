@@ -1,4 +1,4 @@
-﻿using FolderSync.Common;
+﻿using SubrealTeam.Windows.Common.ConsoleConfiguration;
 
 namespace FolderSync
 {
