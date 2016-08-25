@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using SubrealTeam.Windows.Common;
-using SubrealTeam.Windows.Common.Extensions;
-using SubrealTeam.Windows.Common.Logging;
+using SubrealTeam.Common;
+using SubrealTeam.Common.Extensions;
+using SubrealTeam.Common.Logging;
 
 namespace FolderSync
 {
@@ -25,8 +25,8 @@ namespace FolderSync
 			var targetFiles = Directory.GetFiles(targetFolder, config.FileMask, SearchOption.AllDirectories);
 			var sourceFiles = Directory.GetFiles(sourceFolder, config.FileMask, SearchOption.AllDirectories);
 
-			Logger.Instance.Debug("Каталог назначения '{0}': {1} файлов.", targetFolder, targetFiles.Length);
-			Logger.Instance.Debug("Каталог источник '{0}': {1} файлов.", sourceFolder, sourceFiles.Length);
+			Logger.Instance.Debug($"Каталог назначения '{targetFolder}': {targetFiles.Length} файлов.");
+			Logger.Instance.Debug($"Каталог источник '{sourceFolder}': {sourceFiles.Length} файлов.");
 
 			if (sourceFiles.Length > 0)
 			{
@@ -58,7 +58,7 @@ namespace FolderSync
 						var sourceVersion = FileVersionInfo.GetVersionInfo(sourceFile);
 						isNew = destVersion.FileVersion != sourceVersion.FileVersion;
 						if (!isNew)
-							Console.Write(" | пропуск, версия совпадает {0}", destVersion.FileVersion);
+						    Console.Write($" | пропуск, версия совпадает {destVersion.FileVersion}");
 					}
 					
 					if (isNew) 

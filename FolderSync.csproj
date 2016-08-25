@@ -60,8 +60,8 @@
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3')">
       <ItemGroup>
-        <Reference Include="SubrealTeam.Windows.Common">
-          <HintPath>packages\SubrealTeam.Windows.Common\lib\net45\SubrealTeam.Windows.Common.dll</HintPath>
+        <Reference Include="SubrealTeam.Common">
+          <HintPath>packages\SubrealTeam.Common\lib\net45\SubrealTeam.Common.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>

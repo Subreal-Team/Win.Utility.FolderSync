@@ -1,4 +1,4 @@
-﻿using SubrealTeam.Windows.Common.ConsoleConfiguration;
+﻿using SubrealTeam.Common.ConsoleConfiguration;
 
 namespace FolderSync
 {
@@ -31,9 +31,6 @@ namespace FolderSync
 		/// <summary>
 		/// Флаг сравнение по версии
 		/// </summary>
-		public bool IsCompareVersion
-		{
-			get { return CompareVersion.ToLower() == "true"; }
-		}
+		public bool IsCompareVersion => CompareVersion.ToLower() == "true";
     }
 }
