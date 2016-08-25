@@ -31,12 +31,14 @@ namespace FolderSync
 			if (sourceFiles.Length > 0)
 			{
 				Logger.Instance.Debug("Синхронизация ...");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+			    var i = 1;
 				foreach (string sourceFile in sourceFiles)
 				{
-					Console.Write(sourceFile);
+                    var sourceFileName = Path.GetFileName(sourceFile) ?? "";
+                    Guard.IsNotEmpty(sourceFileName);
 
-					var sourceFileName = Path.GetFileName(sourceFile) ?? "";
-					Guard.IsNotEmpty(sourceFileName);
+                    Console.Write($"[{i:D4}/{(sourceFiles.Length + 1):D4}] {sourceFileName}");
 
 					var targetDir = targetFolder;
 					var sourceDir = Path.GetDirectoryName(sourceFile).AddTrailingSlash();
@@ -64,9 +66,23 @@ namespace FolderSync
 					if (isNew) 
 						File.Copy(sourceFile, destFile, true);
 
-					Console.WriteLine();
+				    i++;
+				    ConsoleClearLine();
 				}
+
+                Console.WriteLine($"Синхронизовано {i} файлов из {sourceFiles.Length + 1}.");
+                Console.ResetColor();
 			}
+
+            
 		}
+
+	    private static void ConsoleClearLine()
+	    {
+	        var buffer = new char[Console.WindowWidth];
+            Console.CursorLeft = 0;
+            Console.Write(buffer);
+            Console.CursorTop = Console.CursorTop - 1;
+        }
 	}
 }

@@ -16,6 +16,9 @@ namespace FolderSync
 
 			var synchronizer = new Synchronizer();
 			synchronizer.Run(config);
+
+            Console.Write("Нажмите любую клавишу ...");
+		    Console.ReadKey();
 		}
 
 		private static void PrintHelp()
