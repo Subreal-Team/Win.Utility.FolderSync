@@ -8,10 +8,13 @@ namespace FolderSync
 		{
             var config = new SyncConfiguration();
 
-			if (config.NoParameters)
+            PrintHeader();
+
+            if (config.NoParameters)
 			{
-				PrintHelp();
-				return;
+                config.PrintHelp();
+                Console.ReadKey();
+                return;
 			}
 
 			var synchronizer = new Synchronizer();
@@ -21,7 +24,7 @@ namespace FolderSync
 		    Console.ReadKey();
 		}
 
-		private static void PrintHelp()
+		private static void PrintHeader()
 		{
 			Console.WriteLine("FolderSync - синхронизация каталогов. По маске, с проверкой даты создания, версии файла.");
 		}
