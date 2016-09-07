@@ -25,12 +25,7 @@ namespace FolderSync
 		/// <summary>
 		/// Сравнение по версии
 		/// </summary>
-		[CommandLineArgument("version", defaultValue: "false")]
-		public string CompareVersion { get; protected set; }
-
-		/// <summary>
-		/// Флаг сравнение по версии
-		/// </summary>
-		public bool IsCompareVersion => CompareVersion.ToLower() == "true";
+		[CommandLineArgument("version", defaultValue: false)]
+		public bool CompareVersion { get; protected set; }
     }
 }

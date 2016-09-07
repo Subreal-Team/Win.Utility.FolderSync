@@ -7,30 +7,47 @@ using SubrealTeam.Common.Logging;
 
 namespace FolderSync
 {
-	public class Synchronizer
-	{
-		public void Run(SyncConfiguration config)
-		{
-			Guard.IsNotEmpty(config.TargetFolder);
-			Guard.IsNotEmpty(config.SourceFolder);
-			Guard.IsNotEmpty(config.FileMask);
+    public class Synchronizer
+    {
+        public void Run(SyncConfiguration config)
+        {
+            Guard.IsNotEmpty(config.TargetFolder);
+            Guard.IsNotEmpty(config.SourceFolder);
+            Guard.IsNotEmpty(config.FileMask);
 
-			var targetFolder = config.TargetFolder.AddTrailingSlash();
-			var sourceFolder = config.SourceFolder.AddTrailingSlash();
+            var targetFolder = config.TargetFolder.AddTrailingSlash();
+            var sourceFolder = config.SourceFolder.AddTrailingSlash();
 
-			if (!Directory.Exists(targetFolder))
-				Directory.CreateDirectory(targetFolder);
+            if (!Directory.Exists(targetFolder))
+                Directory.CreateDirectory(targetFolder);
 
-			// Получаем список файлов в директории
-			var targetFiles = Directory.GetFiles(targetFolder, config.FileMask, SearchOption.AllDirectories);
-			var sourceFiles = Directory.GetFiles(sourceFolder, config.FileMask, SearchOption.AllDirectories);
+            Logger.Info("Получаем список файлов в директориях.");
+            string[] targetFiles, sourceFiles;
+            try
+            {
+                targetFiles = Directory.GetFiles(targetFolder, config.FileMask, SearchOption.AllDirectories);
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, $"{targetFolder}");
+                return;
+            }
+            try
+            {
+                sourceFiles = Directory.GetFiles(sourceFolder, config.FileMask, SearchOption.AllDirectories);
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, $"{sourceFolder}");
+                return;
+            }			
 
-			Logger.Instance.Debug($"Каталог назначения '{targetFolder}': {targetFiles.Length} файлов.");
-			Logger.Instance.Debug($"Каталог источник '{sourceFolder}': {sourceFiles.Length} файлов.");
+			Logger.Info($"Каталог назначения '{targetFolder}': {targetFiles.Length} файлов.");
+			Logger.Info($"Каталог источник '{sourceFolder}': {sourceFiles.Length} файлов.");
 
 			if (sourceFiles.Length > 0)
 			{
-				Logger.Instance.Debug("Синхронизация ...");
+				Logger.Info("Синхронизация ...");
                 Console.ForegroundColor = ConsoleColor.Yellow;
 			    var i = 1;
 				foreach (string sourceFile in sourceFiles)
@@ -54,7 +71,7 @@ namespace FolderSync
 
 					var isNew = true;
 					// проверка версии (todo работает долго с файлом по сети)
-					if (config.IsCompareVersion && File.Exists(destFile))
+					if (config.CompareVersion && File.Exists(destFile))
 					{
 						var destVersion = FileVersionInfo.GetVersionInfo(destFile);
 						var sourceVersion = FileVersionInfo.GetVersionInfo(sourceFile);
