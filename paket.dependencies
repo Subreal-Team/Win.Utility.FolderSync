@@ -1,3 +1,4 @@
-source ..\Common\Nuget\packages\
+# source ..\Common\Nuget\packages\
+source https://api.nuget.org/v3/index.json
 
 nuget SubrealTeam.Common

@@ -12,6 +12,7 @@ namespace FolderSync
 
             if (config.NoParameters)
 			{
+                Console.WriteLine("Параметры:");
                 config.PrintHelp();
                 Console.ReadKey();
                 return;
