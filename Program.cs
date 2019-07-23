@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SubRealTeam.Common.Logging;
+using System;
 
 namespace FolderSync
 {
@@ -6,6 +7,9 @@ namespace FolderSync
     {
         static void Main(string[] args)
         {
+            Logger.AddInstance(new ConsoleLogger());
+            Logger.AddInstance(new FileLogger());
+
             var config = new SyncConfiguration();
 
             PrintHeader();

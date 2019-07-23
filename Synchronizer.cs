@@ -11,8 +11,14 @@ namespace FolderSync
     {
         public void Run(SyncConfiguration config)
         {
+            // TODO add requied attribute processing to ConsoleConfigurationBase
+            if (string.IsNullOrEmpty(config.SourceFolder))
+            {
+                Logger.Warn("Необходимо указать каталог источник 'source'");
+                return;
+            }
+
             Guard.IsNotEmpty(config.TargetFolder);
-            Guard.IsNotEmpty(config.SourceFolder);
             Guard.IsNotEmpty(config.FileMask);
 
             var targetFolder = config.TargetFolder.AddTrailingSlash();
